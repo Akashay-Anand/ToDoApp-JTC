@@ -4,11 +4,13 @@ Boilerplate project for NodeJS, React based projects in TypeScript. This README 
 
 ## Table of Contents
 
-- [Getting Started](#getting-started)
-- [Configuration](#configuration)
-- [Integrations](#integrations)
-- [Deployment](#deployment)
-- [E2E Testing](#e2e-testing)
+- [Boilerplate - MERN](#boilerplate---mern)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+  - [Configuration](#configuration)
+  - [Integrations](#integrations)
+  - [Deployment](#deployment)
+  - [E2E Testing](#e2e-testing)
 
 ## Getting Started
 
