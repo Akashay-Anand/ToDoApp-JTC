@@ -9,7 +9,7 @@ import {Provider as StyletronProvider} from 'styletron-react'; // #
 import { Header } from './components';
 import { DepsProvider } from './contexts';
 import { Config } from './helpers';
-import { Home, About, Login, NotFound } from './pages';
+import { Home, About, Login, Register, Dashboard, NotFound } from './pages';
 import { AccessService } from './services';
 import InspectLet from './vendor/inspectlet';
 
@@ -39,6 +39,8 @@ export default function App(): React.ReactElement {
               <Routes>
                 <Route path='/about' element={<About />} />
                 <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/ToDo' element={<Dashboard />} />
                 <Route path='*' element={<NotFound />} />
                 <Route path='/' element={<Home />} />
               </Routes>
