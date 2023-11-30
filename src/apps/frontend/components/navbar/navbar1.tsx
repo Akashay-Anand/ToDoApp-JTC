@@ -4,11 +4,13 @@ import './navstyle.scss';
 
 function Navbar1(): React.ReactElement {
   const navigation = useNavigate();
+  // const [username,setUsername] = useState('');
 
   const [isLogedIn, setisLoggedIn] = useState(false);
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (user) {
+    const token = localStorage.getItem('token');
+    // setUsername(localStorage.getItem('username'));
+    if (token) {
       setisLoggedIn(true);
     } else {
       setisLoggedIn(false);

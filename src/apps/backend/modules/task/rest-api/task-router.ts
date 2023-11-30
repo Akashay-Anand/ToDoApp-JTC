@@ -13,6 +13,10 @@ export default class TaskRouter {
     router.get('/:id', AccountAuthMiddleware.ensureAccess, TaskController.getTask);
     router.delete('/:id', AccountAuthMiddleware.ensureAccess, TaskController.deleteTask);
 
+    router.put('/:id', AccountAuthMiddleware.ensureAccess, TaskController.updateTask);
+    router.patch('/:id', AccountAuthMiddleware.ensureAccess, TaskController.completedTask);
+    router.post('/filter', AccountAuthMiddleware.ensureAccess, TaskController.getTaskFiltered);
+
     return router;
   }
 }

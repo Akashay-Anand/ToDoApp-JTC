@@ -3,16 +3,22 @@ import AppError from '../error/app-error';
 
 export class Task {
   id: string;
-
   account: string;
-
   name: string;
+  description: string;
+  taskType: string;
+  priority: boolean;
+  isCompleted: boolean;
+  dueDate?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export type GetAllTaskParams = {
   accountId: string;
   page?: number;
   size?: number;
+
 };
 
 export type GetTaskParams = {
@@ -20,14 +26,40 @@ export type GetTaskParams = {
   taskId: string;
 };
 
+export type GetTaskFiltere = {
+  account: string;
+  active: true,
+  taskId?: string;
+  isCompleted?: boolean;
+  priority?: boolean;
+  overdue?: boolean;
+};
+
 export type GetTaskByNameParams = {
   accountId: string,
   name: string;
+
 };
 
 export type CreateTaskParams = {
   accountId: string;
   name: string;
+  description: string;
+  taskType: string;
+  priority: boolean;
+  isCompleted: boolean;
+  dueDate?: string;
+};
+
+export type UpdateTaskParams = {
+  taskId: string;
+  accountId: string;
+  name?: string;
+  description?: string;
+  taskType?: string;
+  priority?: boolean;
+  isCompleted?: boolean;
+  dueDate?: string;
 };
 
 export type DeleteTaskParams = {

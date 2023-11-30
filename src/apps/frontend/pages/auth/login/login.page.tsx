@@ -1,14 +1,20 @@
-import { Button, KIND, SHAPE } from "baseui/button";
-import {Input} from 'baseui/input';
-import React, { useCallback, useState } from 'react';
+import { Button, KIND, SHAPE } from 'baseui/button';
+import { Input } from 'baseui/input';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useDeps } from '../../../contexts';
-import { useUserContext } from "../../../contexts/user.context";
+import { useUserContext } from '../../../contexts/user.context';
 
 export default function Login(): React.ReactElement {
   const navigation = useNavigate();
   const { accessService } = useDeps();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
+    if (token) navigation(`/todo/${username}`);
+  }, []);
 
   const { username, password, setUsername, setPassword } = useUserContext();
   const [success, setSuccess] = useState(false);
@@ -74,17 +80,3 @@ export default function Login(): React.ReactElement {
     </>
   );
 }
-
-// {/* <input
-//           onChange={(e) => setUsername(e.target.value)}
-//           id="username"
-//           value={username}
-//           type="text"
-//         />
-//         <input
-//           onChange={(e) => setPassword(e.target.value)}
-//           id="password"
-//           value={password}
-//           type="password"
-//         /> */}
-// {/* <button type="button" onClick={login}> LOGIN </button> */}
