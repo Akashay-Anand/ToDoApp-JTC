@@ -1,32 +1,43 @@
 import { Button, KIND, SHAPE } from "baseui/button";
-// import { ButtonDock } from "baseui/button-dock";
 import {Input} from 'baseui/input';
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useDeps } from '../../../contexts';
+import { useUserContext } from "../../../contexts/user.context";
 
 export default function Login(): React.ReactElement {
   const navigation = useNavigate();
-
   const { accessService } = useDeps();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
+  const { username, password, setUsername, setPassword } = useUserContext();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const login = useCallback(async () => {
+  const login = useCallback(async (e) => {
+    e.preventDefault();
     setSuccess(false);
     setError(false);
 
     try {
       await accessService.login(username, password);
       setSuccess(true);
+
+      // generate token for login
+      const usertoken: any = await accessService.getToken(username, password);
+
+      if (usertoken.data.token) {
+        localStorage.setItem('token', usertoken.data.token);
+        localStorage.setItem('userid', usertoken.data.accountId);
+        localStorage.setItem('username', username);
+      }
+
+      // navigate to the todo page from here
+      navigation(`/todo/${username}`);
     } catch (err) {
       setError(true);
     }
-  }, [accessService, username, password]);
+  }, [accessService, username, password, navigation]);
 
   return (
     <>

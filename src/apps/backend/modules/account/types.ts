@@ -10,7 +10,9 @@ export class Account {
 }
 
 export type CreateAccountParams = {
+  name: string;
   username: string;
+  email: string;
   password: string;
 };
 

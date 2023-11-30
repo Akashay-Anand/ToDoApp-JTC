@@ -1,31 +1,64 @@
-import { Button, KIND, SHAPE } from "baseui/button";
-// import { ButtonDock } from "baseui/button-dock";
-import {Input} from 'baseui/input';
-import React, { useCallback, useState } from 'react';
+import { Button, KIND, SHAPE } from 'baseui/button';
+import { Input } from 'baseui/input';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useDeps } from '../../../contexts';
+import { useUserContext } from '../../../contexts/user.context';
+// import { AccessService } from '../../../services';
 
 export default function Register(): React.ReactElement {
   const navigation = useNavigate();
   const { accessService } = useDeps();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  // const accessService = new AccessService();
+
+  const { name ,username, email, password,
+    setName, setUsername, setEmail, setPassword } = useUserContext();
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const login = useCallback(async () => {
-    setSuccess(false);
-    setError(false);
+  // check if already logged in
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const usern = localStorage.getItem('username');
+    if (token) navigation(`/todo/${usern}`);
+  }, []);
 
+  /// /////////////////////////////////////////////////// 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSuccess(true);
+    setError(false);
     try {
-      await accessService.login(username, password);
-      setSuccess(true);
+      await accessService.register(
+        name,
+        username,
+        email,
+        password,
+      );
+
+      // const object = await accessService.login(username, password);
+      const usertoken: any = await accessService.getToken(
+        username,
+        password,
+      );
+
+      // store data in local storage and navigate to dashboard
+      if (usertoken.data.token) {
+        localStorage.setItem('token', usertoken.data.token);
+        localStorage.setItem('userid', usertoken.data.accountId);
+        localStorage.setItem('username', username);
+        navigation(`/todo/${username}`);
+      } else {
+        setError(true);
+      }
     } catch (err) {
-      setError(true);
+      console.log(err);
+      setError(false);
     }
-  }, [accessService, username, password]);
+  };
+  /// /////////////////////////////////////////////////
 
   return (
     <>
@@ -33,11 +66,27 @@ export default function Register(): React.ReactElement {
         {success ? <h2 id="success">SUCCESS!</h2> : null}
         {error ? <h2 id="error">ERROR!</h2> : null}
         <Input
+          startEnhancer="👑"
+          id="name"
+          placeholder="name"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          type="text"
+        /><br />
+        <Input
           startEnhancer="👤"
           id="username"
           placeholder="UserName"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
+          type="text"
+        /><br />
+        <Input
+          startEnhancer="📧"
+          id="email"
+          placeholder="email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
           type="text"
         /><br />
         <Input
@@ -49,7 +98,7 @@ export default function Register(): React.ReactElement {
           placeholder="Password"
         /> <br />
         <div className="d-flex justify-content-between">
-        <Button onClick={login} >Register</Button>
+        <Button onClick={handleSubmit} >Register</Button>
         <Button onClick={() => navigation('/')} kind={KIND.secondary} shape={SHAPE.pill}>close</Button>
         </div>
         <br />

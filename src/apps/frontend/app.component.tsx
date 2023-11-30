@@ -40,9 +40,9 @@ export default function App(): React.ReactElement {
                 <Route path='/about' element={<About />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
-                <Route path='/ToDo' element={<Dashboard />} />
-                <Route path='*' element={<NotFound />} />
+                <Route path='/todo/:user' element={<Dashboard />} />
                 <Route path='/' element={<Home />} />
+                <Route path='*' element={<NotFound />} />
               </Routes>
               {/* <Footer /> */}
             </div>

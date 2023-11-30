@@ -2,9 +2,11 @@ import React, { createContext, useContext, useState, ReactNode, Dispatch, SetSta
 
 // Define the type for the context values
 interface UserContextValues {
+  name: string;
   username: string;
   email: string;
   password: string;
+  setName: Dispatch<SetStateAction<string>>;
   setUsername: Dispatch<SetStateAction<string>>;
   setEmail: Dispatch<SetStateAction<string>>;
   setPassword: Dispatch<SetStateAction<string>>;
@@ -28,14 +30,17 @@ interface UserContextProviderProps {
 }
 
 export const UserContextProvider: React.FC<UserContextProviderProps> = ({ children }) => {
+  const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const contextValues: UserContextValues = {
+    name,
     username,
     email,
     password,
+    setName,
     setUsername,
     setEmail,
     setPassword,
