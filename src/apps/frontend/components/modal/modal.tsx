@@ -1,12 +1,32 @@
-import React from "react"
-import InputForm from './input-form';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
-export default function ModalForm({ setmodalState, isActive, setcheckReload, taskObj }): React.ReactElement {
+import { useModelContext } from '../../contexts/modal.context';
+
+interface ModalFormProps {
+  children?: React.ReactNode;
+  fixedMode?: boolean;
+  isActive?: boolean;
+  text?: string;
+  setmodalState?: Dispatch<SetStateAction<boolean>>
+}
+
+const ModalForm: React.FC<ModalFormProps> = ({ children }) => {
+  // importing context for modal
+  const {
+    fixedMode, isActive, text, setFixedMode, setIsActive,
+  } = useModelContext();
+
+  // setIsActive(true); // 🛑 this line is making error // use useeffect
+
+  // handle modal visibility change
   const handlemodalStateChange = () => {
-    setmodalState(false);
+    setFixedMode(false);
+    setIsActive(false);
   };
 
-  return(
+  useEffect(() => {}, []);
+
+  return (
     <>
     <div>
 
@@ -15,17 +35,15 @@ export default function ModalForm({ setmodalState, isActive, setcheckReload, tas
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Modal title</h5>
+                <h5 className="modal-title">{text} form</h5>
+                {!fixedMode && (
                 <button type="button" className="close" onClick={handlemodalStateChange} aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
+                )}
               </div>
               <div className="modal-body">
-                
-                <InputForm setmodalState= {setmodalState}
-                 setcheckReload={setcheckReload}
-                  taskObj = {taskObj}/>
-              
+                {children}
               </div>
               <div className="modal-footer">
                 <hr/>
@@ -39,4 +57,6 @@ export default function ModalForm({ setmodalState, isActive, setcheckReload, tas
     </div>
     </>
   );
-}
+};
+
+export default ModalForm;

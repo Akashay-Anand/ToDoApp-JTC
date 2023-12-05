@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import ModalForm from '../../../components/modal/modal1';
+import ModalForm from '../../../components/modal/modal';
 import { useModelContext } from '../../../contexts/modal.context';
 import AuthWrapper from '../auth.wrapper';
 
@@ -15,12 +15,12 @@ export default function Login(): React.ReactElement {
   }, []);
 
   return (
-        <>
-            <AuthWrapper>
-                <ModalForm fixedMode={true} isActive={true} text="Register">
-                  <Registerpage />
-                </ModalForm>
-            </AuthWrapper>
-        </>
+    <>
+      <AuthWrapper>
+        <ModalForm fixedMode={true} isActive={true} text="Register">
+          <Registerpage />
+        </ModalForm>
+      </AuthWrapper>
+    </>
   );
 }

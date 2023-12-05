@@ -6,8 +6,8 @@ import {
   StyledNavigationItem as NavigationItem,
   StyledNavigationList as NavigationList,
 } from 'baseui/header-navigation';
-import {StyledLink as Link} from 'baseui/link';
-import React, {useState, useEffect} from 'react';
+import { StyledLink as Link } from 'baseui/link';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Navbar2(): React.ReactElement {

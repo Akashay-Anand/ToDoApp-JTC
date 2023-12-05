@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
+import { useModelContext } from '../../contexts/modal.context';
+import { useTodoContext } from '../../contexts/todo.context';
 import { AccessService } from '../../services';
 
-export default function InputForm({
-  setmodalState,
-  setcheckReload,
-  taskObj,
-}): React.ReactElement {
+export default function InputForm({ taskObj }): React.ReactElement {
   const accessService = new AccessService();
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('userid');
+
+  const { setIsActive, setText } = useModelContext();
+  const { setcheckReload } = useTodoContext();
 
   // define states
   const [name, setTitle] = useState('');
@@ -25,17 +26,20 @@ export default function InputForm({
 
   useEffect(() => {
     if (editMode) {
+      setText('Edit task');
       setTitle(taskObj.name);
       setDescription(taskObj.description);
       setTaskType(taskObj.taskType);
       setPriority(taskObj.priority);
       setIsCompleted(taskObj.isCompleted);
-      setDueDate(taskObj.dueDate.substring(0, 10));
-
+      if (taskObj.dueDate) {
+        setDueDate(taskObj.dueDate.substring(0, 10));
+        console.log(dueDate);
+      }
       // const formattedDueDate = dueDate.substring(0, 10);
     }
   }, []);
-
+  // console.log("check 02");
   // call api to add data lets see the api implementation
 
   const handleSubmit = async (e) => {
@@ -68,7 +72,7 @@ export default function InputForm({
         );
       }
       setcheckReload((prevValue) => !prevValue); // reload component
-      setmodalState(false); // close modal
+      setIsActive(false); // close modal
     } catch (err) {
       console.log(error);
       setError(true);

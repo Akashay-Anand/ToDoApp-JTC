@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 // import InputForm from '../modal/input-form';
-import ModalForm from '../modal/modal2';
+import { useModelContext } from '../../contexts/modal.context';
+import { useTodoContext } from '../../contexts/todo.context';
+import InputForm from '../modal/input-form';
+import ModalForm from '../modal/modal';
 
-const Card = ({ taskObj, deleteTask, setcheckReload }) => {
-  const [modalstate, setModalstate] = useState(false);
+const Card = ({ taskObj, deleteTask }) => {
+  const { isActive, setIsActive } = useModelContext();
+  const { setcheckReload } = useTodoContext();
+
   const toggle = () => {
-    setModalstate(!modalstate);
+    setIsActive(!isActive);
   };
 
   const handleDelete = () => {
@@ -53,7 +58,7 @@ const Card = ({ taskObj, deleteTask, setcheckReload }) => {
     const differenceInDays: number = Math.floor(
       (targetDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24),
     );
-    const ans: string = `${formatDateD(targetDate)} (${differenceInDays}-D)`;
+    const ans = `${formatDateD(targetDate)} (${differenceInDays}-D)`;
 
     return ans;
   };
@@ -122,13 +127,10 @@ const Card = ({ taskObj, deleteTask, setcheckReload }) => {
       </div>
 
       <div>
-        {modalstate && (
-          <ModalForm
-            setmodalState={setModalstate}
-            isActive={modalstate}
-            setcheckReload={setcheckReload}
-            taskObj={taskObj}
-          />
+        {isActive && (
+          <ModalForm>
+            <InputForm taskObj={taskObj} />
+          </ModalForm>
         )}
       </div>
     </>
