@@ -7,7 +7,7 @@ export default class AccessTokenRouter {
   public static getRoutes(): Router {
     const router = Router();
 
-    router.post('/', AccessTokenController.createAccessToken);
+    router.post('/access-tokens', AccessTokenController.createAccessToken);
 
     return router;
   }

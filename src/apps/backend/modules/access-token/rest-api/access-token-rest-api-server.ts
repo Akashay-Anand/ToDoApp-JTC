@@ -12,7 +12,7 @@ export default class AccessTokenRESTApiServer {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
-    app.use('/access-tokens', AccessTokenRouter.getRoutes());
+    app.use('/token-api', AccessTokenRouter.getRoutes());
 
     app.use(ErrorHandler.AppErrorHandler);
     return Promise.resolve(app);
