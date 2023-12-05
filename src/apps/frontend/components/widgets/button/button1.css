@@ -11,6 +11,7 @@
   text-decoration: none;
   width: 7em;
   z-index: 2;
+  cursor: pointer;
 }
 
 .bn31:hover {

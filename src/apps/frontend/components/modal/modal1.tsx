@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useEffect} from "react"
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
 import { useModelContext } from '../../contexts/modal.context';
 
@@ -11,9 +11,14 @@ interface ModalFormProps {
 }
 
 const ModalForm: React.FC<ModalFormProps> = ({ children }) => {
-  const { fixedMode, isActive, text, setFixedMode, setIsActive } = useModelContext();
-  setIsActive(true);
+  // importing context for modal
+  const {
+    fixedMode, isActive, text, setFixedMode, setIsActive,
+  } = useModelContext();
 
+  // setIsActive(true); // 🛑 this line is making error
+
+  // handle modal visibility change
   const handlemodalStateChange = () => {
     setFixedMode(false);
     setIsActive(false);
@@ -52,6 +57,6 @@ const ModalForm: React.FC<ModalFormProps> = ({ children }) => {
     </div>
     </>
   );
-}
+};
 
 export default ModalForm;

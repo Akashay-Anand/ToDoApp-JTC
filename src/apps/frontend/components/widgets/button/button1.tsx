@@ -1,18 +1,14 @@
-import React from 'react';
 import './button1.css';
-import { useUserContext } from '../../../contexts/user.context';
+import React from 'react';
 
-export default function Button1(): React.ReactElement {
-  const { username } = useUserContext();
-  let urlt = '/todo/';
-  if (username === '') {
-    urlt = '/login';
-  } else {
-    urlt = `/todo/${username}`;
-  }
-  return (
-    <a className="bn31" href={urlt}>
-      <span className="bn31span">Dashboard</span>
-    </a>
-  );
+interface Button1Props {
+  task: () => void;
 }
+
+const Button1: React.FC<Button1Props> = ({ task }) => (
+  <a className="bn31" onClick={task}>
+    <span className="bn31span">Dashboard</span>
+  </a>
+);
+
+export default Button1;

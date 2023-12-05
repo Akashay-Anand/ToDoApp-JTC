@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import ModalForm from '../../../components/modal/modal1';
 import { useModelContext } from '../../../contexts/modal.context';
@@ -8,9 +8,12 @@ import Registerpage from './register.page';
 
 export default function Login(): React.ReactElement {
   const { setFixedMode, setIsActive, setText } = useModelContext();
-  setFixedMode(true);
-  setIsActive(true);
-  setText('Register');
+  useEffect(() => {
+    setFixedMode(true);
+    setIsActive(true);
+    setText('Register');
+  }, []);
+
   return (
         <>
             <AuthWrapper>
@@ -19,5 +22,5 @@ export default function Login(): React.ReactElement {
                 </ModalForm>
             </AuthWrapper>
         </>
-  )
+  );
 }

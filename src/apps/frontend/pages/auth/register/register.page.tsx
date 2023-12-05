@@ -3,17 +3,17 @@ import { Input } from 'baseui/input';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useDeps } from '../../../contexts';
 import { useUserContext } from '../../../contexts/user.context';
-// import { AccessService } from '../../../services';
+import { AccessService } from '../../../services';
 
 export default function Register(): React.ReactElement {
   const navigation = useNavigate();
-  const { accessService } = useDeps();
-  // const accessService = new AccessService();
+  const accessService = new AccessService();
 
-  const { name ,username, email, password,
-    setName, setUsername, setEmail, setPassword } = useUserContext();
+  const {
+    name, username, email, password,
+    setName, setUsername, setEmail, setPassword,
+  } = useUserContext();
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -25,7 +25,6 @@ export default function Register(): React.ReactElement {
     if (token) navigation(`/todo/${usern}`);
   }, []);
 
-  /// /////////////////////////////////////////////////// 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSuccess(true);
@@ -102,10 +101,7 @@ export default function Register(): React.ReactElement {
         <Button onClick={() => navigation('/')} kind={KIND.secondary} shape={SHAPE.pill}>close</Button>
         </div>
         <br />
-        <p className="message">
-          Already registered?..
-          <a href="/login"> Sign In</a>
-        </p>
+        <p> Already registered?.. <a href="/login"> Sign In</a> </p>
       </form>
 
     </>

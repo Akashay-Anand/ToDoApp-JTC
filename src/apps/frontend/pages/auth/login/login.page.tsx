@@ -3,24 +3,29 @@ import { Input } from 'baseui/input';
 import React, { useCallback, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useDeps } from '../../../contexts';
 import { useUserContext } from '../../../contexts/user.context';
+import { AccessService } from '../../../services';
 
 export default function Login(): React.ReactElement {
   const navigation = useNavigate();
-  const { accessService } = useDeps();
 
+  // lode initial user data ; check wether user had already logged in or not;
   useEffect(() => {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
     if (token) navigation(`/todo/${username}`);
   }, []);
 
-  const { username, password, setUsername, setPassword } = useUserContext();
+  // get user data from context API
+  const {
+    username, password, setUsername, setPassword,
+  } = useUserContext();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
   const login = useCallback(async (e) => {
+    const accessService = new AccessService();
+
     e.preventDefault();
     setSuccess(false);
     setError(false);
@@ -43,7 +48,7 @@ export default function Login(): React.ReactElement {
     } catch (err) {
       setError(true);
     }
-  }, [accessService, username, password, navigation]);
+  }, [username, password, navigation]);
 
   return (
     <>
@@ -71,10 +76,7 @@ export default function Login(): React.ReactElement {
         <Button onClick={() => navigation('/')} kind={KIND.secondary} shape={SHAPE.pill}>close</Button>
         </div>
         <br />
-        <p className="message">
-              Not registered?
-              <a href="/register">Create an account</a>
-        </p>
+        <p>Not registered? <a href="/register">Create an account</a> </p>
       </form>
 
     </>
